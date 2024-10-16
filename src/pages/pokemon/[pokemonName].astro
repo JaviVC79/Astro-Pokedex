@@ -1,0 +1,105 @@
+---
+import GoBackButton from "../../components/GoBackButton.astro";
+import Layout from "../../layouts/Layout.astro";
+import {
+  getPokemonData,
+  getPokemon,
+  type PokemonResponse,
+} from "../../lib/pokemon";
+
+export async function getStaticPaths() {
+  const data: PokemonResponse = await getPokemonData(100000, 0);
+  const results = data.results;
+
+  return results.map((pokemon) => ({
+    params: { pokemonName: pokemon.name.toLowerCase() },
+    props: { pokemon },
+  }));
+}
+const { pokemonName } = Astro.params;
+const { pokemon } = Astro.props;
+const pokemonDetails = await getPokemon(pokemon.url);
+---
+
+<Layout title="Pokemon Details">
+  <div
+    class="max-w-5xl mx-auto bg-slate-100 shadow-lg rounded-lg overflow-hidden"
+  >
+    <GoBackButton />
+    <div class="p-4">
+      <h1 class="text-2xl font-bold mb-4">
+        Detalles del Pokemon: {pokemon.name.toUpperCase()}
+      </h1>
+      <div class="flex justify-between mb-4">
+        <p class="text-gray-700 font-bold">Altura: {pokemonDetails.height}</p>
+        <p class="text-gray-700 font-bold">Peso: {pokemonDetails.weight}</p>
+      </div>
+      <p class="text-gray-700 mb-4 mx-4 font-bold">
+        Tipo: {
+          pokemonDetails.types.map((type: any) => (
+            <a
+              class="mx-4 font-normal rounded-lg bg-slate-200 px-2 py-1 text-orange-950 hover:bg-slate-300 hover:scale-95 transition-transform"
+              href={`/pokemon/types/${type.type.name}`}
+            >
+              {type.type.name}
+            </a>
+          ))
+        }
+      </p>
+      <div class="flex justify-center mb-4">
+        <img
+          class="w-24 h-24 mr-2 hover:scale-105 transition-transform"
+          src={pokemonDetails.sprites.other.showdown.front_default}
+          alt={pokemonDetails.name}
+        />
+        <img
+          class="w-24 h-24 hover:scale-105 transition-transform"
+          src={pokemonDetails.sprites.other.showdown.back_default}
+          alt={pokemonDetails.name}
+        />
+      </div>
+      <div class="flex justify-center columns-2">
+        <div class="mb-4 mr-4">
+          <h2 class="text-xl font-semibold mb-2">Habilidades</h2>
+          <ul class="list-disc list-inside">
+            {
+              pokemonDetails.abilities.map((ability: any) => (
+                <li class="text-gray-700">{ability.ability.name}</li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="mb-4 ml-4">
+          <h2 class="text-xl font-semibold mb-2">Estadisticas</h2>
+          <ul class="list-disc list-inside">
+            {
+              pokemonDetails.stats.map((stat: any) => (
+                <li class="text-gray-700">
+                  {stat.stat.name}: {stat.base_stat}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h2 class="text-xl font-semibold mb-2 flex justify-center">
+          Movimientos
+        </h2>
+        <ul class="list-disc list-inside columns-5">
+          {
+            pokemonDetails.moves.map((move: any) => (
+              <a href={`/pokemon/moves/${move.move.name}`}>
+                <li class="my-1 mx-2 rounded-lg bg-slate-200 px-2 py-1 text-orange-950 hover:bg-slate-300 hover:scale-95 transition-transform">
+                  {move.move.name}
+                </li>
+              </a>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  {/*<Image src={CapturaTie} alt="A description of my image." />*/}
+</Layout>

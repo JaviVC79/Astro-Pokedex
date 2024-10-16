@@ -1,0 +1,108 @@
+---
+import GoBackButton from "../../../components/GoBackButton.astro";
+import Layout from "../../../layouts/Layout.astro";
+import {
+    type PokemonResponse,
+    getPokemon,
+    getPokemonTypes,
+    getPokemonsByTypes,
+} from "../../../lib/pokemon";
+
+export async function getStaticPaths() {
+    const data: PokemonResponse = await getPokemonTypes();
+    const results = data.results;
+
+    return results.map((pokemon) => ({
+        params: { types: pokemon.name.toLowerCase() },
+        props: { pokemon },
+    }));
+}
+const { types } = Astro.params;
+const { pokemon } = Astro.props;
+const pokemonDetails = await getPokemon(pokemon.url);
+const typesfetch = await getPokemonsByTypes(types);
+---
+
+<Layout title="Pokemon Types">
+    <GoBackButton />
+    <div class="px-10">
+        <h1 class="text-white">
+            <a
+                href={`/pokemon/types/type/${types}`}
+                class="py-2 px-4 mx-6 my-4 bg-slate-200 hover:bg-slate-300 rounded-lg text-orange-950"
+                >Tipo: {pokemon.name}</a>
+        </h1>
+        <div class="flex justify-center mb-4">
+            <div class="mb-4 mr-80">
+                <p class="text-white">
+                    Recibe doble daño de los tipo: {
+                        pokemonDetails.damage_relations.double_damage_from.map(
+                            (item: any) => (
+                                <li class="text-white">{item.name}</li>
+                            ),
+                        )
+                    }
+                </p>
+            </div>
+            <div class="mb-4 mr-40">
+                <p class="text-white">
+                    Produce doble daño a los tipo: {
+                        pokemonDetails.damage_relations.double_damage_to.map(
+                            (item: any) => (
+                                <li class="text-white">{item.name}</li>
+                            ),
+                        )
+                    }
+                </p>
+            </div>
+        </div>
+        <div class="flex justify-center mb-4">
+            <div class="mb-4 mr-80">
+                <p class="text-white">
+                    Recibe daño medio de los tipo: {
+                        pokemonDetails.damage_relations.half_damage_from.map(
+                            (item: any) => (
+                                <li class="text-white">{item.name}</li>
+                            ),
+                        )
+                    }
+                </p>
+            </div>
+            <div class="mb-4 mr-40">
+                <p class="text-white">
+                    Produce daño medio a los tipo: {
+                        pokemonDetails.damage_relations.half_damage_to.map(
+                            (item: any) => (
+                                <li class="text-white">{item.name}</li>
+                            ),
+                        )
+                    }
+                </p>
+            </div>
+        </div>
+        <div class="flex justify-center mb-4">
+            <div class="mb-4 mr-80">
+                <p class="text-white">
+                    No recibe daño de los tipo: {
+                        pokemonDetails.damage_relations.no_damage_from.map(
+                            (item: any) => (
+                                <li class="text-white">{item.name}</li>
+                            ),
+                        )
+                    }
+                </p>
+            </div>
+            <div class="mb-4 mr-40">
+                <p class="text-white">
+                    No produce daño a los tipo: {
+                        pokemonDetails.damage_relations.no_damage_to.map(
+                            (item: any) => (
+                                <li class="text-white">{item.name}</li>
+                            ),
+                        )
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+</Layout>

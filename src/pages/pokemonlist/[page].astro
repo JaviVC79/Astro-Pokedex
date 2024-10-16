@@ -1,0 +1,162 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getPokemonsDetails } from "../../lib/pokemon";
+
+
+let offset: number;
+
+export async function getStaticPaths() {
+    const pages: string[] = [
+        "page1",
+        "page2",
+        "page3",
+        "page4",
+        "page5",
+        "page6",
+        "page7",
+        "page8",
+        "page9",
+        "page10",
+        "page11",
+        "page12",
+        "page13",
+        "page14",
+        "page15",
+        "page16",
+        "page17",
+        "page18",
+        "page19",
+        "page20",
+        "page21",
+        "page22",
+    ];
+
+    return pages.map((page) => ({
+        params: { page },
+    }));
+}
+const { page } = Astro.params;
+switch (page) {
+    case "page1":
+        offset = 0;
+        break;
+    case "page2":
+        offset = 60;
+        break;
+    case "page3":
+        offset = 120;
+        break;
+    case "page4":
+        offset = 180;
+        break;
+    case "page5":
+        offset = 240;
+        break;
+    case "page6":
+        offset = 300;
+        break;
+    case "page7":
+        offset = 360;
+        break;
+    case "page8":
+        offset = 420;
+        break;
+    case "page9":
+        offset = 480;
+        break;
+    case "page10":
+        offset = 540;
+        break;
+    case "page11":
+        offset = 600;
+        break;
+    case "page12":
+        offset = 660;
+        break;
+    case "page13":
+        offset = 720;
+        break;
+    case "page14":
+        offset = 780;
+        break;
+    case "page15":
+        offset = 840;
+        break;
+    case "page16":
+        offset = 900;
+        break;
+    case "page17":
+        offset = 960;
+        break;
+    case "page18":
+        offset = 1020;
+        break;
+    case "page19":
+        offset = 1080;
+        break;
+    case "page20":
+        offset = 1140;
+        break;
+    case "page21":
+        offset = 1200;
+        break;
+    case "page22":
+        offset = 1260;
+        break;
+    default:
+        offset = 0;
+        break;
+}
+const pageNumber = Astro.params.page?.slice(4);
+const pokemonDetails: any = await getPokemonsDetails(60, offset);
+---
+<Layout title="Pokemon List">
+<script>
+    import { navigate } from "astro/virtual-modules/transitions-router.js";
+    const buttonNext = document.getElementById("next-page");
+    const buttonPrevious = document.getElementById("previous-page");
+    const pageNumber = document.getElementById("page-number");
+   
+    function handleButtonClick(nextOrPrevious: string) {
+        let newPage;
+        if(nextOrPrevious === "next"){newPage = parseInt(pageNumber!.textContent!.split(" ")[1]) + 1;}
+        else{newPage = parseInt(pageNumber!.textContent!.split(" ")[1]) - 1;}
+        if(newPage === 0){newPage = 22;}
+        else if(newPage === 23){newPage = 1;}
+        
+        const newUrl = `/pokemonlist/page${newPage}`;
+        navigate(newUrl);
+    }
+    buttonNext!.addEventListener("click", () => handleButtonClick("next"));
+    buttonPrevious!.addEventListener("click", () => handleButtonClick("previous"));
+</script>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">Pokemons</h1>
+    <p id="page-number" class="mb-4">Pagina {pageNumber}</p>
+    <div class="flex justify-between mb-4">
+        <button
+            id="previous-page"
+            class="bg-slate-200 hover:bg-slate-300 rounded-lg text-orange-950 px-4 py-2 hover:scale-95 transition-transform"
+        >
+            Anterior
+        </button>
+        <button
+            id="next-page"
+            class="bg-slate-200 hover:bg-slate-300 rounded-lg text-orange-950 px-4 py-2 hover:scale-95 transition-transform"
+        >
+            Siguiente
+        </button>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {
+            pokemonDetails.map((pokemon: any) => (
+                <div class="bg-slate-200 hover:bg-slate-300 shadow-md rounded-lg p-4 flex flex-col items-center hover:scale-105 transition-transform">
+                    <a href={`/pokemon/${pokemon.name}`} class="text-lg font-semibold mb-2">{pokemon.name}</a>
+                    <img src={pokemon.sprites.front_default} alt={pokemon.name} class="w-24 h-24 " />
+                </div>
+            ))
+        }
+    </div>
+</div>
+</Layout>

@@ -1,0 +1,27 @@
+---
+const baseUrl = "https://pokeapi.co/api/v2/pokemon/";
+
+const getPokemonData = async () => {
+    try {
+        const response = await fetch(`${baseUrl}?limit=102&offset=0`);
+        if (!response.ok) {
+            throw new Error("Pokémon no encontrado");
+        }
+        const data = await response.json();
+        //console.log(data);
+        return data;
+    } catch (error) {
+        console.error("Error al obtener los datos del Pokémon:", error);
+    }
+};
+
+const data = await getPokemonData();
+const pokemons = data.results;
+//console.log(pokemons);
+---
+
+<div class="columns-3">
+    <ul>
+        {pokemons.map((item: any) => <a href={`/pokemon/${item.name}`}><li class="my-1 mx-2 rounded-lg bg-slate-200 px-2 py-1 text-orange-950 hover:bg-slate-300 hover:scale-95 transition-transform">{item.name}</li></a>)}
+    </ul>
+</div>

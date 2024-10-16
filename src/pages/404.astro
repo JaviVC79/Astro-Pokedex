@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        .pokemon-font {
+            font-family: 'Press Start 2P', cursive !important;
+        }
+        /* Add !important to all Tailwind classes */
+        * {
+            --tw-bg-opacity: 1 !important;
+            --tw-text-opacity: 1 !important;
+            --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
+            --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color) !important;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-yellow-300 to-red-500 !important min-h-screen !important flex !important items-center !important justify-center !important p-4 !important">
+    <div class="bg-white !important rounded-lg !important shadow-xl !important p-6 !important text-center !important max-w-md !important w-full !important">
+        <div class="w-16 !important h-16 !important mx-auto !important mb-4 !important bg-red-500 !important rounded-full !important flex !important items-center !important justify-center !important">
+            <div class="w-8 !important h-8 !important bg-white !important rounded-full !important"></div>
+        </div>
+        <h1 class="text-4xl !important font-bold !important text-gray-800 !important mb-2 !important pokemon-font">404</h1>
+        <h2 class="text-2xl !important font-semibold !important text-gray-700 !important mb-4 !important pokemon-font">Oh no! Wild 404 appeared!</h2>
+        <div class="w-48 !important h-48 !important mx-auto !important mb-4 !important bg-gray-200 !important rounded-full !important flex !important items-center !important justify-center !important">
+            <span class="text-gray-400 !important text-4xl !important">?</span>
+        </div>
+        <p class="text-gray-600 !important mb-6 !important">
+            The page you're looking for has fled into the tall grass. Let's get you back on track!
+        </p>
+        <a href="/" class="inline-block !important bg-red-500 !important hover:bg-red-600 !important text-white !important font-bold !important py-2 !important px-4 !important rounded !important transition !important duration-300 !important pokemon-font">
+            Return to PokemonWorld
+        </a>
+    </div>
+    <style>
+        /* Additional styles to ensure !important is applied to pseudo-classes and breakpoints */
+        .hover\:bg-red-600:hover {
+            --tw-bg-opacity: 1 !important;
+            background-color: rgb(220 38 38 / var(--tw-bg-opacity)) !important;
+        }
+        @media (min-width: 640px) {
+            .sm\:text-lg {
+                font-size: 1.125rem !important;
+                line-height: 1.75rem !important;
+            }
+        }
+    </style>
+</body>
+</html>

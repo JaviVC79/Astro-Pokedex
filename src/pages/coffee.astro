@@ -1,0 +1,268 @@
+---
+import { Image } from "astro:assets";
+import Layout from "../layouts/Layout.astro";
+import {
+  Coffee,
+  MapPin,
+  Clock,
+  Instagram,
+  Facebook,
+  Twitter,
+} from "lucide-astro";
+import coffeeMain from "../../src/assets/coffeeMain.png";
+import latte from "../../src/assets/latte.png";
+import cappuccino from "../../src/assets/cappuccino.png";
+import espresso from "../../src/assets/espresso.jpg";
+const featuredProducts = [
+  { name: "Espresso", price: "$3.50", image: espresso },
+  { name: "Cappuccino", price: "$4.50", image: cappuccino },
+  { name: "Latte", price: "$4.00", image: latte },
+];
+---
+
+<Layout title="Brew Haven - Artisanal Coffee Shop">
+  <div class="flex flex-col min-h-screen">
+    <header class="px-4 lg:px-6 h-14 flex items-center">
+      <a class="flex items-center justify-center" href="#">
+        <Coffee class="h-6 w-6" />
+        <span class="ml-2 text-lg font-bold">Brew Haven</span>
+      </a>
+      <nav class="ml-auto flex gap-4 sm:gap-6">
+        <a
+          class="text-sm font-medium hover:underline underline-offset-4"
+          href="#menu">Menu</a
+        >
+        <a
+          class="text-sm font-medium hover:underline underline-offset-4"
+          href="#about">About</a
+        >
+        <a
+          class="text-sm font-medium hover:underline underline-offset-4"
+          href="#contact">Contact</a
+        >
+      </nav>
+    </header>
+    <main class="flex-1">
+      <section
+        class="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/placeholder.svg')] bg-cover bg-center"
+      >
+        <div class="container px-4 md:px-6">
+          <div class="flex flex-col items-center space-y-4 text-center">
+            <div class="space-y-2">
+              <h1
+                class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white"
+              >
+                Welcome to Brew Haven
+              </h1>
+              <p class="mx-auto max-w-[700px] text-white md:text-xl">
+                Discover the perfect blend of artisanal coffee and cozy ambiance
+              </p>
+            </div>
+            <div class="space-x-4">
+              <a
+                href="#"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
+                >Order Now</a
+              >
+              <a
+                href="#"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background border border-input hover:bg-accent hover:text-accent-foreground h-10 py-2 px-4"
+                >Our Menu</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="menu" class="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
+        <div class="container px-4 md:px-6">
+          <h2
+            class="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12"
+          >
+            Featured Brews
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {
+              featuredProducts.map((product) => (
+                <div class="flex flex-col items-center">
+                  <Image
+                    alt={product.name}
+                    class="aspect-square object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
+                    src={product.image}
+                    width="300"
+                    height="300"
+                  />
+                  <h3 class="mt-4 text-xl font-bold">{product.name}</h3>
+                  <p class="text-sm text-gray-500">{product.price}</p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </section>
+      <section id="about" class="w-full py-12 md:py-24 lg:py-32">
+        <div class="container px-4 md:px-6">
+          <div
+            class="grid items-center gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2"
+          >
+            <Image
+              alt="Coffee shop interior"
+              class="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+              height={310}
+              src={coffeeMain}
+              width={550}
+            />
+            <div class="flex flex-col justify-center space-y-4">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
+                About Brew Haven
+              </h2>
+              <p
+                class="max-w-[600px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                At Brew Haven, we're passionate about crafting the perfect cup
+                of coffee. Our cozy atmosphere and expertly roasted beans create
+                an unforgettable experience for coffee lovers.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="contact" class="w-full py-12 md:py-24 lg:py-32 bg-gray-100">
+        <div class="container px-4 md:px-6">
+          <h2
+            class="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-12"
+          >
+            Visit Us
+          </h2>
+          <div class="grid gap-6 lg:grid-cols-3">
+            <div
+              class="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg"
+            >
+              <MapPin class="h-8 w-8 text-primary" />
+              <h3 class="text-xl font-bold">Location</h3>
+              <p class="text-sm text-gray-500 text-center">
+                123 Coffee Street, Brewville, BV 12345
+              </p>
+            </div>
+            <div
+              class="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg"
+            >
+              <Clock class="h-8 w-8 text-primary" />
+              <h3 class="text-xl font-bold">Hours</h3>
+              <p class="text-sm text-gray-500 text-center">
+                Mon-Fri: 7am - 7pm
+              </p>
+              <p class="text-sm text-gray-500 text-center">
+                Sat-Sun: 8am - 6pm
+              </p>
+            </div>
+            <div
+              class="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg"
+            >
+              <Coffee class="h-8 w-8 text-primary" />
+              <h3 class="text-xl font-bold">Contact</h3>
+              <p class="text-sm text-gray-500 text-center">
+                info@brewhaven.com
+              </p>
+              <p class="text-sm text-gray-500 text-center">(555) 123-4567</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="w-full py-12 md:py-24 lg:py-32">
+        <div class="container px-4 md:px-6">
+          <div class="flex flex-col items-center space-y-4 text-center">
+            <div class="space-y-2">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl">
+                Join Our Coffee Club
+              </h2>
+              <p
+                class="max-w-[900px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400"
+              >
+                Sign up for our newsletter to receive special offers and
+                updates!
+              </p>
+            </div>
+            <div class="w-full max-w-sm space-y-2">
+              <form class="flex space-x-2">
+                <input
+                  class="flex h-10 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 max-w-lg flex-1"
+                  placeholder="Enter your email"
+                  type="email"
+                />
+                <button
+                  type="submit"
+                  class="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background bg-primary text-primary-foreground hover:bg-primary/90 h-10 py-2 px-4"
+                >
+                  Subscribe
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer
+      class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t"
+    >
+      <p class="text-xs text-gray-500 dark:text-gray-400">
+        © 2024 Brew Haven. All rights reserved.
+      </p>
+      <nav class="sm:ml-auto flex gap-4 sm:gap-6">
+        <a class="text-xs hover:underline underline-offset-4" href="#"
+          >Terms of Service</a
+        >
+        <a class="text-xs hover:underline underline-offset-4" href="#"
+          >Privacy</a
+        >
+      </nav>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-gray-500 hover:text-gray-600">
+          <Instagram class="h-5 w-5" />
+          <span class="sr-only">Instagram</span>
+        </a>
+        <a href="#" class="text-gray-500 hover:text-gray-600">
+          <Facebook class="h-5 w-5" />
+          <span class="sr-only">Facebook</span>
+        </a>
+        <a href="#" class="text-gray-500 hover:text-gray-600">
+          <Twitter class="h-5 w-5" />
+          <span class="sr-only">Twitter</span>
+        </a>
+      </div>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  /* Add any global styles here */
+  :root {
+    --primary: #4a5568;
+    --primary-foreground: #ffffff;
+    --ring: #4a5568;
+    --background: #ffffff;
+    --muted: #f7fafc;
+    --muted-foreground: #4a5568;
+    --accent: #edf2f7;
+    --accent-foreground: #1a202c;
+  }
+
+  .dark {
+    --background: #1a202c;
+    --muted: #2d3748;
+    --muted-foreground: #e2e8f0;
+    --accent: #2d3748;
+    --accent-foreground: #f7fafc;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+      "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--muted-foreground);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+</style>

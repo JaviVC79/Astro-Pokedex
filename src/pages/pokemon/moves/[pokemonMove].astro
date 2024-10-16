@@ -1,0 +1,78 @@
+---
+import GoBackButton from "../../../components/GoBackButton.astro";
+import Layout from "../../../layouts/Layout.astro";
+import {
+  getLastPathUrl,
+  getPokemon,
+  getPokemonMoves,
+} from "../../../lib/pokemon";
+
+export async function getStaticPaths() {
+  const data: any = await getPokemonMoves();
+  const results = data.results;
+
+  return results.map((pokemonMoves: any) => ({
+    params: { pokemonMove: pokemonMoves.name.toLowerCase() },
+    props: { pokemonMoves },
+  }));
+}
+const { pokemonMove } = Astro.params;
+const { pokemonMoves } = Astro.props;
+const { url } = Astro.request;
+const lastPath = getLastPathUrl(url);
+const data: any = await getPokemonMoves();
+const results = data.results;
+const moveUrl = results.find((move: any) => move.name === lastPath);
+const pokemonDetails = await getPokemon(moveUrl.url);
+//console.log(pokemonDetails);
+---
+
+<Layout title="Pokemon Moves">
+  <div class="mx-10">
+    <GoBackButton />
+    <h1 class="text-2xl font-bold mb-4 text-white">
+      {lastPath!.toUpperCase()}: {pokemonDetails.effect_entries[0].effect}
+    </h1>
+    <ul class="bg-white rounded-lg p-4 text-black">
+      <li>
+        <strong>Accuracy:</strong> {pokemonDetails.accuracy}
+      </li>
+      <li>
+        <strong>Crit Rate:</strong> {pokemonDetails.crit_rate}
+      </li>
+      <li>
+        <strong>Drain:</strong> {pokemonDetails.drain}
+      </li>
+      <li>
+        <strong>Flinch Chance:</strong> {pokemonDetails.flinch_chance}
+      </li>
+      <li>
+        <strong>Healing:</strong> {pokemonDetails.healing}
+      </li>
+      <li>
+        <strong>Max Hits:</strong> {pokemonDetails.max_hits}
+      </li>
+      <li>
+        <strong>Max Turns:</strong> {pokemonDetails.max_turns}
+      </li>
+      <li>
+        <strong>Min Hits:</strong> {pokemonDetails.min_hits}
+      </li>
+      <li>
+        <strong>Min Turns:</strong> {pokemonDetails.min_turns}
+      </li>
+      <li>
+        <strong>Stat Chance:</strong> {pokemonDetails.stat_chance}
+      </li>
+      <li>
+        <strong>Power:</strong> {pokemonDetails.power}
+      </li>
+      <li>
+        <strong>PP:</strong> {pokemonDetails.pp}
+      </li>
+      <li>
+        <strong>Priority:</strong> {pokemonDetails.priority}
+      </li>
+    </ul>
+  </div>
+</Layout>
